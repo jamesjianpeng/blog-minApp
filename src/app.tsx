@@ -3,7 +3,7 @@ import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 
 import store from './store/index'
-
+import 'taro-ui/dist/style/index.scss' // 全局引入一次即可
 import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -23,8 +23,31 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/Project/Project',
+      'pages/Article/Article',
+      'pages/Home/Home'
     ],
+    tabBar: {
+      "custom": false,
+      "color": "#eee",
+      "selectedColor": "#fff",
+      "backgroundColor": "#000",
+      "list": [
+        {
+          "pagePath": "pages/Project/Project",
+          "text": "Project"
+        },
+        {
+          "pagePath": "pages/Article/Article",
+          "text": "Article"
+        },
+        {
+          "pagePath": "pages/Home/Home",
+          "text": "Home"
+        }
+      ]
+    },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',

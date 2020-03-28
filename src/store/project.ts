@@ -15,7 +15,7 @@ interface IProjectParamPage extends IParamPage {
 export type IProjects = IProjectResPageType<IProject[]>
 export type IProjectRes = IRes<IProject>
 
-class ProjectStore {
+export class ProjectStore {
     @observable
     public data: IProject = {} as IProject
 
@@ -36,7 +36,10 @@ class ProjectStore {
     @action
     public getList = (params?: IProjectParamPage) => {
       return  requestGet('/api/v1/get/project', params).then((res: IRes<IProjects>) => {
-        this.setList(res.data)
+        console.log('list')
+        console.log(res.data.data)
+        console.log('list')
+        this.setList(res.data.data)
       })
     }
 

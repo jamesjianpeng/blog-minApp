@@ -5,7 +5,7 @@ import { observer, inject } from '@tarojs/mobx'
 import { STORE_PROJECT } from '../../constants'
 import { ProjectStore } from '../../store'
 // import TabBar from '../../components/TabBar'
-import './Home.scss'
+import './Project.scss'
 
 interface IProps {
     [STORE_PROJECT]: ProjectStore
@@ -15,14 +15,14 @@ interface IProps {
 @observer
 class Index extends Component<IProps, any> {
   /**
-   * 指定config的类型声明为: Taro.Config
+   * 指定config的类型声xiangmu明为: Taro.Config
    *
    * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '个人中心'
+    navigationBarTitleText: '项目'
   }
 
   constructor(props: IProps) {
@@ -62,7 +62,7 @@ class Index extends Component<IProps, any> {
     console.log('render')
     return (
       <View className='index'>
-        <Text>welcom smartblog ✌ author: jamesjianpeng - home</Text>
+        <Text>welcom smartblog ✌ author: jamesjianpeng - project</Text>
       </View>
     )
   }

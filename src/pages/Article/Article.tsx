@@ -5,7 +5,7 @@ import { observer, inject } from '@tarojs/mobx'
 import { STORE_PROJECT } from '../../constants'
 import { ProjectStore } from '../../store'
 // import TabBar from '../../components/TabBar'
-import './Home.scss'
+import './Article.scss'
 
 interface IProps {
     [STORE_PROJECT]: ProjectStore
@@ -22,7 +22,7 @@ class Index extends Component<IProps, any> {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '个人中心'
+    navigationBarTitleText: '文章'
   }
 
   constructor(props: IProps) {
@@ -62,7 +62,7 @@ class Index extends Component<IProps, any> {
     console.log('render')
     return (
       <View className='index'>
-        <Text>welcom smartblog ✌ author: jamesjianpeng - home</Text>
+        <Text>welcom smartblog ✌ author: jamesjianpeng - article</Text>
       </View>
     )
   }

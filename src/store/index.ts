@@ -2,8 +2,9 @@ import { STORE_CONFIG, STORE_ARTICLE, STORE_TAG, STORE_PROJECT, STORE_COUNTER } 
 import articleStore from './article';
 import configStore from './config';
 import tagStore from './tag';
-import projectStore from './project';
+import{ ProjectStore } from './project';
 import counterStore from './counter';
+const projectStore = new ProjectStore()
 const store = {
     [STORE_COUNTER]: counterStore,
     [STORE_ARTICLE]: articleStore,
@@ -14,9 +15,5 @@ const store = {
 
 export default store
 export {
-    counterStore,
-    articleStore,
-    configStore,
-    tagStore,
-    projectStore
+    ProjectStore
 }

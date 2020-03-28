@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Taro from '@tarojs/taro'
 
 console.log()
 
@@ -67,28 +68,21 @@ export interface IUrlQuery {
 
 export type IUrlQueryTemplate = IUrlQuery | {}
 
-export function requestGet(url: any, params?: any, showMessage?: boolean): Promise<any> {
-  return new Promise((resolve, reject) => {
-    axios.get(`${urlConfig[env]}${url}`, { params: params || {} }).then((res: IRes<any>) => {
-      if (res.data) {
-        resolve(res.data)
-        if (showMessage) {
-          alert(res.data.message.toString())
-        }
-      } else {
-        if (showMessage) {
-          alert(res.toString())
-        }
+export function requestGet(url: any, params?: any, _showMessage?: boolean): Promise<any> {
+  return new Promise((resolve) => {
+    Taro.request({
+      url: `${origin}${url}`,
+      data: params,
+      method: 'GET',
+      success: (res: IRes<any>) => {
+        resolve(res)
       }
-    }).catch((e) => {
-      alert(e.toString())
-      reject(e)
     })
   })
 }
 export function requestDelete(url: any, params?: any, showMessage?: boolean): Promise<any> {
   return new Promise((resolve, reject) => {
-    axios.delete(`${urlConfig[env]}${url}`, { params: params || {} }).then((res: IRes<any>) => {
+    axios.delete(`${origin}${url}`, { params: params || {} }).then((res: IRes<any>) => {
       if (res.data) {
         resolve(res.data)
         if (showMessage) {
@@ -107,7 +101,7 @@ export function requestDelete(url: any, params?: any, showMessage?: boolean): Pr
 }
 export function requestPost(url: any, params: any, showMessage?: boolean): Promise<any> {
   return new Promise((resolve, reject) => {
-    axios.post(`${urlConfig[env]}${url}`, params).then((res: IRes<any>) => {
+    axios.post(`${origin}${url}`, params).then((res: IRes<any>) => {
       if (res.data) {
         resolve(res.data)
         if (showMessage) {
@@ -126,7 +120,7 @@ export function requestPost(url: any, params: any, showMessage?: boolean): Promi
 }
 
 export function requestPostUpload(file: any): Promise<any> {
-  return axios.post(`${urlConfig[env]}/api/file/v1/file/upload`, file, {headers: {
+  return axios.post(`${origin}/api/file/v1/file/upload`, file, {headers: {
     'Content-Type': 'multipart/form-data'
   }})
 }
