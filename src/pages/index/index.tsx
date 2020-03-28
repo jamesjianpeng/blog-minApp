@@ -1,8 +1,26 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Button, Text } from '@tarojs/components'
+import { observer, inject } from '@tarojs/mobx'
+import { STORE_COUNTER } from '../../constants/index'
+
 import './index.scss'
 
+type PageStateProps = {
+  counterStore: {
+    counter: number,
+    increment: Function,
+    decrement: Function,
+    incrementAsync: Function
+  }
+}
+
+interface Index {
+  props: PageStateProps;
+}
+
+@inject(STORE_COUNTER)
+@observer
 class Index extends Component {
 
   /**
@@ -30,10 +48,29 @@ class Index extends Component {
 
   componentDidHide () { }
 
+  increment = () => {
+    const { counterStore } = this.props
+    counterStore.increment()
+  }
+
+  decrement = () => {
+    const { counterStore } = this.props
+    counterStore.decrement()
+  }
+
+  incrementAsync = () => {
+    const { counterStore } = this.props
+    counterStore.incrementAsync()
+  }
+
   render () {
+    const { counterStore: { counter } } = this.props
     return (
       <View className='index'>
-        <Text>welcom smartblog ✌</Text>
+        <Button onClick={this.increment}>+</Button>
+        <Button onClick={this.decrement}>-</Button>
+        <Button onClick={this.incrementAsync}>Add Async</Button>
+        <Text>{counter}</Text>
       </View>
     )
   }
