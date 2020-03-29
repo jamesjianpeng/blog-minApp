@@ -1,5 +1,6 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
+import { AtButton, AtAvatar } from 'taro-ui'
 import { View, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import { STORE_PROJECT } from '../../constants'
@@ -28,7 +29,8 @@ class Index extends Component<IProps, any> {
   constructor(props: IProps) {
     super(props)
     this.state = {
-      current: 0
+      current: 0,
+      userInfo: {}
     }
   }
 
@@ -51,9 +53,27 @@ class Index extends Component<IProps, any> {
 
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () {
+    Taro.getUserInfo().then((e) => {
+      console.log(e)
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
 
   componentDidHide () { }
+
+  onGotUserInfo = res => {
+    if(res.detail.userInfo){ // 返回的信息中包含用户信息则证明用户允许获取信息授权
+      console.log(res)
+      console.log('授权成功')
+      this.setState({
+        userInfo: res.detail.userInfo
+      })
+    }else{ // 用户取消授权，进行提示，促进重新授权
+      console.log('用户拒绝授权')
+    }
+  }
 
   render () {
     const store = this.props[STORE_PROJECT]
@@ -62,7 +82,17 @@ class Index extends Component<IProps, any> {
     console.log('render')
     return (
       <View className='index'>
-        <Text>welcom smartblog ✌ author: jamesjianpeng - home</Text>
+
+        {
+          this.state.userInfo.avatarUrl ? (
+            <View className='at-row at-row__justify--center at-row__align--center default-box'>
+              <AtAvatar circle image={ this.state.userInfo ? this.state.userInfo.avatarUrl : '' } />
+              <View> { this.state.userInfo.nickName } </View>
+            </View>
+          ) : (
+            <AtButton className='login-btn' openType='getUserInfo' onGetUserInfo={this.onGotUserInfo}>getuserinfo</AtButton>
+          )
+        }
       </View>
     )
   }

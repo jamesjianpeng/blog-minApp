@@ -1,6 +1,7 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
+// import { AtIcon } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
 import { STORE_PROJECT } from '../../constants'
 import { ProjectStore } from '../../store'
@@ -33,7 +34,6 @@ class Index extends Component<IProps, any> {
   }
 
   componentWillMount () {
-      console.log(this.props[STORE_PROJECT])
       console.log('componentWillMount')
       const store = this.props[STORE_PROJECT]
       store.getList({
@@ -56,13 +56,12 @@ class Index extends Component<IProps, any> {
   componentDidHide () { }
 
   render () {
-    const store = this.props[STORE_PROJECT]
-    console.log('render')
-    console.log(store)
-    console.log('render')
+    // const store = this.props[STORE_PROJECT]
     return (
       <View className='index'>
-        <Text>welcom smartblog ✌ author: jamesjianpeng - project</Text>
+      <View className='at-row at-row__justify--center at-row__align--center default-box'>
+        敬请期待
+      </View>
       </View>
     )
   }

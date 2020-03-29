@@ -1,17 +1,20 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import { STORE_PROJECT } from '../../constants'
-import { ProjectStore } from '../../store'
+import { STORE_ARTICLE } from '../../constants'
+import { ArticleStore } from '../../store'
+import { AtList, AtListItem, AtActivityIndicator, AtSearchBar } from "taro-ui"
+import moment from 'moment';
 // import TabBar from '../../components/TabBar'
 import './Article.scss'
+// import { IArticle } from '@smartblog/models';
 
 interface IProps {
-    [STORE_PROJECT]: ProjectStore
+  [STORE_ARTICLE]: ArticleStore
 }
 
-@inject(STORE_PROJECT)
+@inject(STORE_ARTICLE)
 @observer
 class Index extends Component<IProps, any> {
   /**
@@ -25,47 +28,157 @@ class Index extends Component<IProps, any> {
     navigationBarTitleText: '文章'
   }
 
+  get getList() {
+    const store = this.props[STORE_ARTICLE]
+    return store.list.data
+  }
   constructor(props: IProps) {
     super(props)
     this.state = {
-      current: 0
+      current: 0,
+      loading: true
     }
   }
 
-  componentWillMount () {
-      console.log(this.props[STORE_PROJECT])
-      console.log('componentWillMount')
-      const store = this.props[STORE_PROJECT]
-      store.getList({
-        name: `blog-administration,blog-client`,
-        page: 1,
-        pageSize: 10
-      })
+  componentWillMount() {
+    this.initList()
   }
 
-  componentWillReact () {
+  componentWillReact() {
     console.log('componentWillReact')
   }
 
-  componentDidMount () { }
+  componentDidMount() {
+    console.log('=componentDidMount')
+  }
 
-  componentWillUnmount () { }
+  componentWillUnmount() {
+    console.log('=componentWillUnmount')
+  }
 
-  componentDidShow () { }
+  componentDidShow() {
+    this.initList()
+  }
 
-  componentDidHide () { }
+  componentDidHide() {
+    console.log('=componentDidHide')
+  }
+  initList() {
+    this.setState({
+      loading: true
+    })
+    const store = this.props[STORE_ARTICLE]
+    store.getList({
+      page: store.list.page,
+      pageSize: store.list.pageSize,
+      type: store.list.type,
+      keyword: store.list.keyword,
+      startDate: store.list.startDate,
+      endDate: store.list.endDate,
+      tag: store.list.tag
+    }).then(() => {
+      this.setState({
+        loading: false
+      })
+    })
+  }
 
-  render () {
-    const store = this.props[STORE_PROJECT]
-    console.log('render')
-    console.log(store)
-    console.log('render')
+  render() {
+    const store = this.props[STORE_ARTICLE]
+
+    const list = this.getList.map((item) => {
+      let time = item.createTime ? moment(new Date(item.updateTime)).format('YYYY/MM/DD hh:mm:ss') : '-'
+      time = `${time}`
+      return (
+        // <Text key={ item.title }> { item.title } </Text>
+        <AtListItem
+          key={item.title}
+          title={item.title}
+          note={time}
+          onClick={() => { this.handleClick(item) }}
+          arrow='right'
+          data-id={item._id}
+        />
+      )
+    })
+    console.log(store.list.data)
     return (
       <View className='index'>
-        <Text>welcom smartblog ✌ author: jamesjianpeng - article</Text>
+        <AtSearchBar
+          fixed={true}
+          value={store.list.keyword || ''}
+          placeholder="搜索文章名字"
+          onConfirm={this.handleChange}
+          onClear={this.clearChange}
+          onChange={(e) => e}
+        />
+        <View className="box">
+          <AtList>
+            {list}
+          </AtList>
+        </View>
+        {
+          this.state.loading ? (
+            <View className="fix-center">
+              <AtActivityIndicator mode='center' size={32} color='#13CE66'></AtActivityIndicator>
+            </View>
+          ) : null
+        }
       </View>
     )
   }
+
+  handleChange = (e) => {
+    console.log(e.detail.value)
+    const value = e.detail.value
+    this.setState({
+      loading: true
+    })
+    const store = this.props[STORE_ARTICLE]
+    store.getList({
+      page: store.list.page,
+      pageSize: store.list.pageSize,
+      type: store.list.type,
+      keyword: value,
+      startDate: store.list.startDate,
+      endDate: store.list.endDate,
+      tag: store.list.tag
+    }).then(() => {
+      this.setState({
+        loading: false
+      })
+    })
+    // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
+    return value
+  }
+  clearChange = (e) => {
+    this.setState({
+      loading: true
+    })
+    const store = this.props[STORE_ARTICLE]
+    store.getList({
+      page: store.list.page,
+      pageSize: store.list.pageSize,
+      type: store.list.type,
+      keyword: '',
+      startDate: store.list.startDate,
+      endDate: store.list.endDate,
+      tag: store.list.tag
+    }).then(() => {
+      this.setState({
+        loading: false
+      })
+    })
+    // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
+    return ''
+  }
+
+  handleClick = (item) => {
+    console.log(item)
+    Taro.navigateTo({
+      url: `/pages/Article/ArticleDetail?id=${item._id}`
+    })
+  }
 }
 
-export default Index  as ComponentType
+export default Index as ComponentType

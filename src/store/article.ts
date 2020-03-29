@@ -13,7 +13,7 @@ interface IResPageTyp<T> extends IResPage<T> {
 export type IArticles = IResPageTyp<IArticle[]>
 export type IArticleRes = IRes<IArticle>
 
-class ArticleStore {
+export class ArticleStore {
     @observable
     public data: IArticle = {} as IArticle
 
@@ -37,6 +37,8 @@ class ArticleStore {
     @action
     public getList = (params?: IParamPage) => {
       return  requestGet('/api/v1/get/articles', params).then((res: IRes<IArticles>) => {
+        console.log(res)
+        console.log('-------')
         this.setList(res.data)
       })
     }
@@ -93,4 +95,4 @@ class ArticleStore {
     }
 }
 
-export default new ArticleStore() 
+export default new ArticleStore()

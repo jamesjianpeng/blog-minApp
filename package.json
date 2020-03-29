@@ -24,7 +24,8 @@
     "dev:h5": "npm run build:h5 -- --watch",
     "dev:rn": "npm run build:rn -- --watch",
     "dev:qq": "npm run build:qq -- --watch",
-    "dev:quickapp": "npm run build:quickapp -- --watch"
+    "dev:quickapp": "npm run build:quickapp -- --watch",
+    "tsc": "exit"
   },
   "author": "",
   "license": "MIT",
@@ -42,16 +43,18 @@
     "@tarojs/taro-swan": "2.0.7",
     "@tarojs/taro-tt": "2.0.7",
     "@tarojs/taro-weapp": "2.0.7",
-    "axios": "^0.19.2",
     "babel-runtime": "^6.26.0",
     "echarts12": "^1.1.6",
     "mobx": "4.8.0",
+    "moment": "^2.24.0",
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",
+    "prismjs": "^1.19.0",
     "regenerator-runtime": "0.11.1",
     "taro-ui": "^2.3.1"
   },
   "devDependencies": {
+    "@smartblog/models": "^1.2.9",
     "@tarojs/mini-runner": "2.0.7",
     "@tarojs/webpack-runner": "2.0.7",
     "@types/react": "^16.4.6",
@@ -74,6 +77,6 @@
     "stylelint": "9.3.0",
     "stylelint-config-taro-rn": "2.0.7",
     "stylelint-taro-rn": "2.0.7",
-    "typescript": "^3.0.1"
+    "typescript": "3"
   }
 }

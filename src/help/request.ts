@@ -1,4 +1,4 @@
-import axios from 'axios'
+const axios : { post: any, get: any, delete: any } = {post: {}, get: {}, delete: {}}
 import Taro from '@tarojs/taro'
 
 console.log()
@@ -75,7 +75,7 @@ export function requestGet(url: any, params?: any, _showMessage?: boolean): Prom
       data: params,
       method: 'GET',
       success: (res: IRes<any>) => {
-        resolve(res)
+        resolve(res.data)
       }
     })
   })
@@ -124,32 +124,3 @@ export function requestPostUpload(file: any): Promise<any> {
     'Content-Type': 'multipart/form-data'
   }})
 }
-
-const axiosInterceptorsReq = () => { // 请求之前
-  axios.interceptors.request.use((config) => {
-    // const token: any = window.localStorage.getItem('tokenString@playCommander') || '' // 获取Token
-    // if (!token) { // 请求头中带token
-    config.headers.common.token = commonHeaderConfig.token
-    // config.headers.common.token = isBeta ? commonHeaderConfig.token : `${JSON.parse(token).token}`
-    config.headers.common.appId = commonHeaderConfig.appId
-    config.headers.common.authCode = commonHeaderConfig.authCode
-    config.headers.common.language = 'zh_CN'
-    // }
-    return config
-  }, (error: any) => {
-    return error
-  })
-}
-
-const axiosInterceptorsRes = () => { // 请求之前
-  axios.interceptors.response.use((config) => {
-    console.log(config)
-    console.log('-----=======')
-    return config
-  }, (error: any) => {
-    return error
-  })
-}
-
-axiosInterceptorsRes()
-axiosInterceptorsReq()

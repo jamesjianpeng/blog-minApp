@@ -36,10 +36,7 @@ export class ProjectStore {
     @action
     public getList = (params?: IProjectParamPage) => {
       return  requestGet('/api/v1/get/project', params).then((res: IRes<IProjects>) => {
-        console.log('list')
-        console.log(res.data.data)
-        console.log('list')
-        this.setList(res.data.data)
+        this.setList(res.data)
       })
     }
 

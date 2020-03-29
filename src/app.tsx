@@ -23,14 +23,14 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index',
-      'pages/Project/Project',
       'pages/Article/Article',
+      'pages/Project/Project',
+      'pages/Article/ArticleDetail',
       'pages/Home/Home'
     ],
     tabBar: {
       "custom": false,
-      "color": "#eee",
+      "color": "#999",
       "selectedColor": "#fff",
       "backgroundColor": "#000",
       "list": [
