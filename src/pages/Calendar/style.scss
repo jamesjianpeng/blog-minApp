@@ -1,0 +1,33 @@
+h1, h2 {
+    font-family: Lato;
+  }
+  .day {
+    display: inline-block;
+    width: 80px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+  }
+
+  .day:hover {
+    background: #eee;
+  }
+
+  .is-today,.is-today:hover {
+    background: #666;
+    color: #fff;
+  }
+
+  .weekend-title {
+    padding: 10px 0;
+  }
+
+  .flex-h-flex-start {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .box {
+    width: 48%;
+  }

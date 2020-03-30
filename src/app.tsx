@@ -25,6 +25,7 @@ class App extends Component {
     pages: [
       'pages/Article/Article',
       'pages/Project/Project',
+      'pages/Calendar/Calendar',
       'pages/Article/ArticleDetail',
       'pages/Home/Home'
     ],
