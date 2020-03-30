@@ -6,6 +6,9 @@ import { Text, View } from '@tarojs/components'
 interface IState { data: any, year: number}
 
 class Calendar extends Component<any, IState> {
+    config: Config = {
+        navigationBarTitleText: '日历工具'
+    }
     static defaultProps = {
         data: getDatePickDateInstance( new Date()),
         year:  new Date().getFullYear()
@@ -33,8 +36,6 @@ class Calendar extends Component<any, IState> {
                 weekendTitle={ DAY }
                 year={ year }
             />))
-        // const res = this.props
-        console.log(this.props, '-------------------')
         return (
             <View> { res } </View>
         )

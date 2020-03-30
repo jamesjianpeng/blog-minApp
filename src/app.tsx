@@ -40,6 +40,10 @@ class App extends Component {
           "text": "Project"
         },
         {
+          "pagePath": "pages/Calendar/Calendar",
+          "text": "Calendar"
+        },
+        {
           "pagePath": "pages/Article/Article",
           "text": "Article"
         },
